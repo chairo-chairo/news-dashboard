@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ニュースダッシュボード</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+
+<header class="bg-white border-b border-slate-200 sticky top-0 z-10">
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-lg sm:text-xl font-bold text-slate-900">ニュースダッシュボード</h1>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">毎朝10時に自動更新（直近2日分を表示）</p>
+    </div>
+    <span class="hidden sm:inline-block text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-medium">日々のニュース整理</span>
+  </div>
+
+  <!-- カテゴリー切り替え -->
+  <div class="max-w-5xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto">
+    <button data-cat="tech" class="cat-btn px-4 py-2 rounded-full text-sm font-medium border whitespace-nowrap">スピントロニクス・IOWN</button>
+    <button data-cat="economy" class="cat-btn px-4 py-2 rounded-full text-sm font-medium border whitespace-nowrap">日本経済ニュース（週間まとめ）</button>
+    <button data-cat="b_type_support" class="cat-btn px-4 py-2 rounded-full text-sm font-medium border whitespace-nowrap">B型支援 立ち上げ準備</button>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-6 space-y-6">
+
+  <!-- 日付タブ -->
+  <div id="day-tabs" class="flex gap-2"></div>
+
+  <!-- カテゴリー本文 -->
+  <section id="content-section" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6"></section>
+
+  <!-- 株価セクション（テックカテゴリー時のみ表示） -->
+  <section id="stock-section" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+    <div class="flex items-center justify-between mb-1">
+      <h2 class="text-base sm:text-lg font-bold text-slate-900">関連銘柄の株価（前日比）</h2>
+      <span id="stock-updated" class="text-xs text-slate-400"></span>
+    </div>
+    <p class="text-xs text-slate-500 mb-4">ウェブ検索で取得した参考値です。リアルタイム株価ではないため、正確な値は証券会社のアプリ等でご確認ください。投資助言ではありません。</p>
+
+    <h3 class="text-sm font-semibold text-slate-600 mb-2">メイン銘柄</h3>
+    <div id="stocks-main" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6"></div>
+
+    <h3 class="text-sm font-semibold text-slate-600 mb-2">ニッチ銘柄（中小型・隠れた実力派）</h3>
+    <div id="stocks-niche" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6"></div>
+
+    <h3 class="text-sm font-semibold text-slate-600 mb-2">ETF</h3>
+    <div id="stocks-etf" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+  </section>
+
+  <!-- おすすめリンク集 -->
+  <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
+    <h2 class="text-base sm:text-lg font-bold text-slate-900 mb-4">おすすめリンク集</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="links-list"></div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pb-6">
+    このページは学習・情報整理を目的としたものであり、投資助言ではありません。
+  </footer>
+</main>
+
+<script id="dashboard-data" type="application/json">
+{
+  "generated_at": "2026-07-14T10:00:00+09:00",
+  "categories": {
+    "tech": {
+      "label": "スピントロニクス・IOWN",
+      "days": [
+        {
+          "date": "2026-07-14",
+          "news": {
+            "topic1_title": "NTT「IOWN（光電融合）」の投資ファンド組成と量産化",
+            "topic1_body": "6月10日、NTTは著名投資家や韓国SKグループ、台湾の中華電信などと組んで、約800億円規模の投資ファンド「アイオンAIファンド」を作ると発表。電気の代わりに光でデータをやり取りする「光電融合」技術を広めるのが狙いで、光電融合スイッチは2026年度中に商品化予定。通信容量は世界トップレベルの毎秒102.4テラビットを目指す。",
+            "topic2_title": "東京エレクトロン×東北大学、次世代メモリ「MRAM」の車載向け実証",
+            "topic2_body": "電源を切っても記憶が消えない次世代メモリ「MRAM」を作る製造装置を、東京エレクトロンが東北大学と共同開発。車の中のような高温環境（175℃）でも壊れずに使える20nmサイズのMRAM試作に成功した。",
+            "why_it_matters": "「光電融合」は、AIが計算する巨大なデータセンターの電力消費を大幅に減らせる技術。AIの電気代・発熱問題を和らげ、サービスをより安く速く使えるようにする。「MRAM」は電源を入れ直しても一瞬で作業を再開できるメモリで、スマホやパソコンの起動が速くなったり、車載機器が暑さに強くなったりする。",
+            "stock_impact": "IOWN関連ではNTTのほか、古河電気工業やNEC、富士通が協業パートナーとして名前が挙がる。MRAM関連では製造装置を作る東京エレクトロンやキヤノン、磁性材料を扱う化学メーカーが注目されている。いずれも「日本にしか作れない部品・装置」を握っている点が特徴。",
+            "summary": "電気を光に、記憶を消えないメモリに変える技術で、日本がまだ世界をリードできるチャンスが広がっている一日でした。"
+          }
+        }
+      ]
+    },
+    "economy": {
+      "label": "日本経済ニュース（週間まとめ）",
+      "week_range": "2026-07-08 〜 2026-07-14",
+      "items": [
+        {
+          "date": "2026-07-08",
+          "headline": "長期金利が30年ぶりの高水準に、株式市場は大幅続落",
+          "summary": "国が長期間お金を借りるときの金利（長期金利）が2.7％台まで上昇し、1996年以来およそ30年ぶりの高さになった。国の財政が今後さらに膨らむのではという心配（財政拡張懸念）が広がり、この日の株式市場は大きく値を下げた。"
+        },
+        {
+          "date": "2026-07-08",
+          "headline": "円安が1ドル162円台前半で継続",
+          "summary": "為替（円とドルの交換レート）は1ドル162円台前半で推移。株式市場の強さの一部はこの円安に支えられているため、円の動き次第で株価も左右されやすい状態が続いている。"
+        },
+        {
+          "date": "2026-07-10",
+          "headline": "国内企業物価指数が前年比+7.1％",
+          "summary": "企業同士が売り買いする際の値段の動きを示す「企業物価指数」（6月分）が発表され、前月比+0.4％、前年と比べると+7.1％の上昇。原材料などのコスト上昇がまだ続いていることを示している。"
+        },
+        {
+          "date": "2026-07-02〜07-13",
+          "headline": "日経平均は乱高下しつつも週間では下落",
+          "summary": "半導体・AI関連株への利益確定売りとフィラデルフィア半導体株指数（アメリカの半導体銘柄の値動きを示す指標）の強さが交互に効き、日経平均は7月2日に1741円安、その後反発、7月13日には前週末比1315円安の67,242円で取引を終えるなど、値動きの荒い1週間だった。"
+        },
+        {
+          "date": "2026年6月",
+          "headline": "日銀が政策金利を1.00％に引き上げ",
+          "summary": "日本銀行が6月の会合で政策金利を0.25％引き上げて1.00％に。日本が長く続いた「ほぼゼロ金利」の時代から、約30年ぶりに『金利のある世界』へ戻ったことを象徴する決定だった。"
+        },
+        {
+          "date": "2026-07-14",
+          "headline": "本日はアメリカの物価指標（CPI）に注目",
+          "summary": "日本時間の今夜、アメリカの消費者物価指数（CPI、物価の上がり具合を示す統計）が発表される。この結果次第でアメリカの利上げ観測が変わり、日米の金利差を通じてドル円相場が大きく動く可能性がある。"
+        }
+      ],
+      "top_traded_stocks": {
+        "updated_at": "2026-06-25 18:40時点（ウェブ検索取得の参考値）",
+        "note": "その日に金額ベースでどれだけ多く取引されたかのランキングです（売買代金上位）。投資助言ではなく、市場の注目度を知るための参考情報です。",
+        "list": [
+          {"rank": 1, "code": "285A", "name": "キオクシアホールディングス", "price": 103850, "change": 11350, "changePct": 12.27},
+          {"rank": 2, "code": "9984", "name": "ソフトバンクグループ", "price": 7118, "change": 521, "changePct": 7.90},
+          {"rank": 3, "code": "6857", "name": "アドバンテスト", "price": 35900, "change": 4700, "changePct": 15.06},
+          {"rank": 4, "code": "1570", "name": "NEXT FUNDS 日経平均レバレッジ上場投信", "price": 84770, "change": 7110, "changePct": 9.16},
+          {"rank": 5, "code": "8035", "name": "東京エレクトロン", "price": 75340, "change": 5440, "changePct": 7.78},
+          {"rank": 6, "code": "5803", "name": "フジクラ", "price": 6436, "change": 123, "changePct": 1.95},
+          {"rank": 7, "code": "6976", "name": "太陽誘電", "price": 18820, "change": 1895, "changePct": 11.20},
+          {"rank": 8, "code": "6981", "name": "村田製作所", "price": 11825, "change": 795, "changePct": 7.21},
+          {"rank": 9, "code": "4062", "name": "イビデン", "price": 26370, "change": 1585, "changePct": 6.39},
+          {"rank": 10, "code": "5016", "name": "JX金属", "price": 4887, "change": 254, "changePct": 5.48},
+          {"rank": 11, "code": "6920", "name": "レーザーテック", "price": 53180, "change": 2570, "changePct": 5.08},
+          {"rank": 12, "code": "5801", "name": "古河電気工業", "price": 49920, "change": 1890, "changePct": 3.94},
+          {"rank": 13, "code": "6146", "name": "ディスコ", "price": 85970, "change": 6230, "changePct": 7.81},
+          {"rank": 14, "code": "6723", "name": "ルネサスエレクトロニクス", "price": 4844, "change": 141, "changePct": 3.00},
+          {"rank": 15, "code": "8306", "name": "三菱UFJフィナンシャル・グループ", "price": 3233, "change": 28, "changePct": 0.87},
+          {"rank": 16, "code": "8136", "name": "サンリオ", "price": 1005.5, "change": 73.5, "changePct": 7.89},
+          {"rank": 17, "code": "9983", "name": "ファーストリテイリング", "price": 84300, "change": 2760, "changePct": 3.38},
+          {"rank": 18, "code": "7974", "name": "任天堂", "price": 6859, "change": 1, "changePct": 0.01},
+          {"rank": 19, "code": "6752", "name": "パナソニック ホールディングス", "price": 4610, "change": 156, "changePct": 3.50},
+          {"rank": 20, "code": "7011", "name": "三菱重工業", "price": 3618, "change": -125, "changePct": -3.34}
+        ]
+      }
+    },
+    "b_type_support": {
+      "label": "B型支援 立ち上げ準備",
+      "updated_at": "2026-07-14",
+      "sections": {
+        "system_changes": {
+          "title": "直近半年の制度改正・新設",
+          "items": [
+            {"date": "2026-06", "headline": "就労継続支援B型の基本報酬区分が見直し", "summary": "工賃（利用者に支払う賃金）の平均額に応じた報酬の区分について、下限額を一律3,000円引き上げ。前回の改定で自動的に上位区分に入ってしまった事業所への調整で、区分が下がって報酬が減ってしまう事業所には緩和措置も設けられた。"},
+            {"date": "2026-04", "headline": "就労移行支援体制加算のルールが厳格化", "summary": "同じ利用者が転職を繰り返すたびに事業所が加算（追加の報酬）を受け取れる仕組みが問題視され、1年間に加算を受けられる人数の上限が「事業所の定員数まで」に制限された。"},
+            {"date": "2026-06", "headline": "新規開設のB型・放課後等デイなど4サービスは基本報酬がやや引き下げ", "summary": "2026年6月1日以降に新しく指定を受ける事業所は、基本報酬が1.2〜2.8%程度引き下げられる（B型は約1.6%減）。増えすぎた事業所数を抑える目的とされ、重度障害児・医療的ケア児向けなど一部は対象外。"},
+            {"date": "2026年内", "headline": "処遇改善加算の拡充で職員の給与アップを後押し", "summary": "職員の給料を上げるための加算が拡充され、月額1万円程度のベースアップが想定されている。ICT（情報通信技術）の活用などで業務効率を上げた事業所は、さらに増額される仕組みもある。"}
+          ]
+        },
+        "children_news": {
+          "title": "特性のある子どものニュース",
+          "items": [
+            {"date": "2026年", "headline": "発達特性のある小中学生の不登校率は35.5％", "summary": "全国平均（3.72％）の約9.5倍という調査結果。学校への行き渋りや欠席を経験した子どもは61.5％にのぼり、特性に合わせた居場所づくりの必要性が改めて示された。"},
+            {"date": "2026年", "headline": "AIが学習履歴を分析する個別最適化テストが登場", "summary": "発達障害やギフテッド（特定分野に強い才能を持つ子）の特性を持つ子ども向けに、AIがその子の得意・不得意を分析して学習内容を調整するテストの提供が始まっている。"},
+            {"date": "2026年4月", "headline": "世界自閉症啓発デーの啓発活動が全国で展開", "summary": "自閉症など発達に特性のある子どもが安心して暮らせる社会を目指し、リーフレットやLINEスタンプなどを使った理解促進の取り組みが各地で行われている。"}
+          ]
+        },
+        "afterschool_school_news": {
+          "title": "放課後等デイ・学校の特別支援関連ニュース",
+          "items": [
+            {"date": "2026-06", "headline": "放課後等デイサービスなど4サービスの新規報酬が引き下げ", "summary": "新規参入が増えすぎたことへの対応として、新しく指定を受ける事業所の基本報酬が1.2〜2.8%引き下げられた（重度障害児・医療的ケア児支援など一部は従来水準を維持）。"},
+            {"date": "2026年内", "headline": "職員の処遇改善加算が拡充、ICT活用で更なる増額も", "summary": "放課後等デイサービスでも月額1万円程度のベースアップが想定され、ICTの活用や業務分担の見直しなど生産性向上に取り組む事業所はさらに増額される可能性がある。"}
+          ]
+        },
+        "ai_recommendations": {
+          "title": "福祉現場のAI活用おすすめニュース",
+          "items": [
+            {"date": "2026年", "headline": "支援記録の作成を助ける福祉DXアプリが登場", "summary": "「AI支援さん」のような福祉・介護現場向けのアプリで、日々の支援記録の下書きをAIが手伝ってくれる仕組みが広がっている。手書き・手入力の負担軽減につながる。"},
+            {"date": "2026年", "headline": "個別支援計画の作成やチャットボット対応にも生成AIを活用", "summary": "利用者ごとの支援計画づくりや、日常のちょっとした問い合わせ対応にAIチャットボットを使う事業所が増えており、職員の業務負担軽減が報告されている。"},
+            {"date": "2026年", "headline": "厚生労働省が「省力化投資促進プラン（障害福祉）」を推進", "summary": "国としてAIなどのデジタル技術を使った業務効率化を後押しする方針を打ち出しており、開設準備の段階から、こうした支援ツールの導入を視野に入れておくと良さそう。"}
+          ]
+        }
+      }
+    }
+  },
+  "stocks": {
+    "updated_at": "2026-07-14（ウェブ検索取得・時刻は銘柄ごとに異なる参考値）",
+    "main": [
+      {"code": "8035", "name": "東京エレクトロン", "price": 71300, "change": -1640, "changePct": -2.25},
+      {"code": "7751", "name": "キヤノン", "price": 4368, "change": 56, "changePct": 1.30},
+      {"code": "6857", "name": "アドバンテスト", "price": 29370, "change": -460, "changePct": -1.54},
+      {"code": "6723", "name": "ルネサスエレクトロニクス", "price": 4435, "change": -327, "changePct": -6.87},
+      {"code": "6762", "name": "TDK", "price": 3186, "change": -203, "changePct": -5.98},
+      {"code": "4063", "name": "信越化学工業", "price": 7418, "change": 78, "changePct": 1.06},
+      {"code": "9432", "name": "NTT", "price": 149.1, "change": 1.5, "changePct": 1.02}
+    ],
+    "niche": [
+      {"code": "4055", "name": "ティアンドエスグループ", "price": 1674, "change": -66, "changePct": -3.79},
+      {"code": "4369", "name": "トリケミカル研究所", "price": 3325, "change": 125, "changePct": 3.91},
+      {"code": "6382", "name": "トリニティ工業", "price": 1281, "change": -19, "changePct": -1.46},
+      {"code": "6859", "name": "エスペック", "price": 3965, "change": 45, "changePct": 1.15}
+    ],
+    "etf": [
+      {"code": "200A", "name": "NEXT FUNDS 日経半導体株指数連動型上場投信", "price": 5183, "change": -307, "changePct": -5.59}
+    ]
+  },
+  "links": [
+    {"title": "東北大学 国際集積エレクトロニクス研究開発センター（CIES）", "url": "http://www.cies.tohoku.ac.jp/", "desc": "スピントロニクス・MRAM研究の中心拠点"},
+    {"title": "NTT R&D / IOWN公式サイト", "url": "https://group.ntt/jp/rd/", "desc": "IOWN・光電融合の最新研究発表"},
+    {"title": "EE Times Japan", "url": "https://eetimes.jp/", "desc": "半導体・エレクトロニクス業界の専門メディア"},
+    {"title": "東京エレクトロン IR情報", "url": "https://www.tel.co.jp/ir/", "desc": "決算・技術発表などの公式IR"},
+    {"title": "株探（かぶたん） 半導体関連銘柄", "url": "https://kabutan.jp/", "desc": "個別銘柄の株価・ニュース確認に"},
+    {"title": "NEDO ニュースリリース", "url": "https://www.nedo.go.jp/news/press/index.html", "desc": "国のプロジェクト成果発表（MRAM関連あり）"},
+    {"title": "The Japan Times", "url": "https://www.japantimes.co.jp/", "desc": "NYT国際版を掲載する日本の英字紙"},
+    {"title": "日本経済新聞 マーケット", "url": "https://www.nikkei.com/markets/", "desc": "為替・金利・株式市場の最新ニュース"}
+  ]
+}
+</script>
+
+<script>
+const data = JSON.parse(document.getElementById('dashboard-data').textContent);
+const dayTabs = document.getElementById('day-tabs');
+const contentSection = document.getElementById('content-section');
+const stockSection = document.getElementById('stock-section');
+const catBtns = document.querySelectorAll('.cat-btn');
+let activeCat = 'tech';
+let activeIndex = 0;
+
+function fmtDate(d) {
+  const dt = new Date(d + 'T00:00:00+09:00');
+  return dt.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric', weekday: 'short' });
+}
+
+function renderCatButtons() {
+  catBtns.forEach(btn => {
+    const isActive = btn.dataset.cat === activeCat;
+    btn.className = 'cat-btn px-4 py-2 rounded-full text-sm font-medium border whitespace-nowrap ' +
+      (isActive ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50');
+  });
+  stockSection.classList.toggle('hidden', activeCat !== 'tech');
+}
+
+function renderDayTabs() {
+  if (activeCat !== 'tech') {
+    dayTabs.innerHTML = '';
+    dayTabs.classList.add('hidden');
+    return;
+  }
+  dayTabs.classList.remove('hidden');
+  const days = data.categories[activeCat].days;
+  dayTabs.innerHTML = '';
+  days.forEach((day, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'px-4 py-2 rounded-full text-sm font-medium border ' +
+      (i === activeIndex ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50');
+    btn.textContent = (i === 0 ? '本日 ' : '') + fmtDate(day.date);
+    btn.onclick = () => { activeIndex = i; renderDayTabs(); renderContent(); };
+    dayTabs.appendChild(btn);
+  });
+  if (days.length < 2) {
+    const placeholder = document.createElement('span');
+    placeholder.className = 'px-4 py-2 rounded-full text-sm text-slate-400 border border-dashed border-slate-200';
+    placeholder.textContent = '前日分は明日以降に表示されます';
+    dayTabs.appendChild(placeholder);
+  }
+}
+
+function renderTechNews(day) {
+  const n = day.news;
+  contentSection.innerHTML = `
+    <div class="space-y-5">
+      <div>
+        <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 1. 本日の大注目トピック</span>
+        <h3 class="font-bold text-slate-900">${n.topic1_title}</h3>
+        <p class="text-sm text-slate-600 mt-1 leading-relaxed">${n.topic1_body}</p>
+        ${n.topic2_title ? `<h3 class="font-bold text-slate-900 mt-3">${n.topic2_title}</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">${n.topic2_body}</p>` : ''}
+      </div>
+      <div>
+        <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 2. なぜ凄いのか・生活への影響</span>
+        <p class="text-sm text-slate-600 leading-relaxed">${n.why_it_matters}</p>
+      </div>
+      <div>
+        <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 3. 日本株へのインパクト（話題の整理）</span>
+        <p class="text-sm text-slate-600 leading-relaxed">${n.stock_impact}</p>
+      </div>
+      <div class="bg-indigo-50 rounded-xl p-4">
+        <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 4. 本日のまとめ</span>
+        <p class="text-sm text-slate-700 leading-relaxed font-medium">${n.summary}</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderEconomy() {
+  const econ = data.categories.economy;
+  const t = econ.top_traded_stocks;
+  contentSection.innerHTML = `
+    <div class="mb-4 flex items-center justify-between">
+      <span class="inline-block text-xs font-semibold text-indigo-600">■ 直近1週間の注目ニュース</span>
+      <span class="text-xs text-slate-400">${econ.week_range || ''}</span>
+    </div>
+    <div class="space-y-4 mb-8">
+      ${econ.items.map(item => `
+        <div class="border-l-4 border-indigo-200 pl-4">
+          <div class="text-xs text-slate-400 mb-0.5">${item.date}</div>
+          <div class="font-bold text-slate-900 text-sm">${item.headline}</div>
+          <p class="text-sm text-slate-600 mt-1 leading-relaxed">${item.summary}</p>
+        </div>
+      `).join('')}
+    </div>
+    ${t ? `
+    <div class="border-t border-slate-100 pt-5">
+      <div class="flex items-center justify-between mb-1">
+        <span class="inline-block text-xs font-semibold text-indigo-600">■ 売買代金上位20銘柄（前日比）</span>
+        <span class="text-xs text-slate-400">${t.updated_at}</span>
+      </div>
+      <p class="text-xs text-slate-500 mb-3">${t.note}</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="text-left text-xs text-slate-400 border-b border-slate-200">
+              <th class="py-2 pr-2">順位</th>
+              <th class="py-2 pr-2">コード</th>
+              <th class="py-2 pr-2">銘柄名</th>
+              <th class="py-2 pr-2 text-right">株価</th>
+              <th class="py-2 pr-2 text-right">前日比</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${t.list.map(s => {
+              const up = s.change >= 0;
+              const priceStr = s.price >= 1000 ? s.price.toLocaleString('ja-JP') : s.price;
+              return `
+                <tr class="border-b border-slate-100">
+                  <td class="py-2 pr-2 text-slate-400">${s.rank}</td>
+                  <td class="py-2 pr-2 text-slate-400">${s.code}</td>
+                  <td class="py-2 pr-2 font-medium text-slate-800 whitespace-nowrap">${s.name}</td>
+                  <td class="py-2 pr-2 text-right font-semibold text-slate-900">${priceStr}円</td>
+                  <td class="py-2 pr-2 text-right font-semibold ${up ? 'text-rose-600' : 'text-blue-600'}">${up ? '+' : ''}${s.change} (${up ? '+' : ''}${s.changePct.toFixed(2)}%)</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    ` : ''}
+  `;
+}
+
+function renderBTypeSupport() {
+  const b = data.categories.b_type_support;
+  const sec = b.sections;
+  const order = ['system_changes', 'children_news', 'afterschool_school_news', 'ai_recommendations'];
+  contentSection.innerHTML = `
+    <div class="mb-4 flex items-center justify-between">
+      <span class="inline-block text-xs font-semibold text-indigo-600">■ B型支援 立ち上げ準備メモ</span>
+      <span class="text-xs text-slate-400">更新日: ${b.updated_at}</span>
+    </div>
+    <div class="space-y-8">
+      ${order.map(key => `
+        <div>
+          <h3 class="text-sm font-bold text-slate-900 mb-3 bg-indigo-50 inline-block px-3 py-1 rounded-full">${sec[key].title}</h3>
+          <div class="space-y-3 mt-2">
+            ${sec[key].items.map(item => `
+              <div class="border-l-4 border-slate-200 pl-4">
+                <div class="text-xs text-slate-400 mb-0.5">${item.date}</div>
+                <div class="font-bold text-slate-900 text-sm">${item.headline}</div>
+                <p class="text-sm text-slate-600 mt-1 leading-relaxed">${item.summary}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderContent() {
+  if (activeCat === 'tech') {
+    const day = data.categories.tech.days[activeIndex];
+    renderTechNews(day);
+  } else if (activeCat === 'economy') {
+    renderEconomy();
+  } else if (activeCat === 'b_type_support') {
+    renderBTypeSupport();
+  }
+}
+
+function stockCard(s) {
+  const up = s.change >= 0;
+  const color = up ? 'text-rose-600 bg-rose-50' : 'text-blue-600 bg-blue-50';
+  const arrow = up ? '▲' : '▼';
+  const priceStr = s.price >= 1000 ? s.price.toLocaleString('ja-JP') : s.price;
+  return `
+    <div class="border border-slate-200 rounded-xl p-3 flex flex-col gap-1">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-slate-400">${s.code}</span>
+        <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${color}">${arrow} ${Math.abs(s.changePct).toFixed(2)}%</span>
+      </div>
+      <div class="text-sm font-semibold text-slate-800 truncate">${s.name}</div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-lg font-bold text-slate-900">${priceStr}円</span>
+        <span class="text-xs ${up ? 'text-rose-500' : 'text-blue-500'}">${up ? '+' : ''}${s.change}円</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderStocks() {
+  document.getElementById('stock-updated').textContent = data.stocks.updated_at;
+  document.getElementById('stocks-main').innerHTML = data.stocks.main.map(stockCard).join('');
+  document.getElementById('stocks-niche').innerHTML = data.stocks.niche.map(stockCard).join('');
+  document.getElementById('stocks-etf').innerHTML = data.stocks.etf.map(stockCard).join('');
+}
+
+function renderLinks() {
+  document.getElementById('links-list').innerHTML = data.links.map(l => `
+    <a href="${l.url}" target="_blank" rel="noopener" class="block border border-slate-200 rounded-xl p-3 hover:bg-slate-50 transition">
+      <div class="text-sm font-semibold text-indigo-600">${l.title}</div>
+      <div class="text-xs text-slate-500 mt-0.5">${l.desc}</div>
+    </a>
+  `).join('');
+}
+
+catBtns.forEach(btn => {
+  btn.onclick = () => {
+    activeCat = btn.dataset.cat;
+    activeIndex = 0;
+    renderCatButtons();
+    renderDayTabs();
+    renderContent();
+  };
+});
+
+renderCatButtons();
+renderDayTabs();
+renderContent();
+renderStocks();
+renderLinks();
+</script>
+
+</body>
+</html>
