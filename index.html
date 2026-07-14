@@ -53,7 +53,7 @@
 
   <!-- おすすめリンク集 -->
   <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
-    <h2 class="text-base sm:text-lg font-bold text-slate-900 mb-4">おすすめリンク集</h2>
+    <h2 id="links-heading" class="text-base sm:text-lg font-bold text-slate-900 mb-4">おすすめリンク集</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="links-list"></div>
   </section>
 
@@ -81,6 +81,13 @@
             "summary": "電気を光に、記憶を消えないメモリに変える技術で、日本がまだ世界をリードできるチャンスが広がっている一日でした。"
           }
         }
+      ],
+      "links": [
+        {"title": "東北大学 国際集積エレクトロニクス研究開発センター（CIES）", "url": "http://www.cies.tohoku.ac.jp/", "desc": "スピントロニクス・MRAM研究の中心拠点"},
+        {"title": "NTT R&D / IOWN公式サイト", "url": "https://group.ntt/jp/rd/", "desc": "IOWN・光電融合の最新研究発表"},
+        {"title": "EE Times Japan", "url": "https://eetimes.jp/", "desc": "半導体・エレクトロニクス業界の専門メディア"},
+        {"title": "東京エレクトロン IR情報", "url": "https://www.tel.co.jp/ir/", "desc": "決算・技術発表などの公式IR"},
+        {"title": "NEDO ニュースリリース", "url": "https://www.nedo.go.jp/news/press/index.html", "desc": "国のプロジェクト成果発表（MRAM関連あり）"}
       ]
     },
     "economy": {
@@ -143,7 +150,13 @@
           {"rank": 19, "code": "6752", "name": "パナソニック ホールディングス", "price": 4610, "change": 156, "changePct": 3.50},
           {"rank": 20, "code": "7011", "name": "三菱重工業", "price": 3618, "change": -125, "changePct": -3.34}
         ]
-      }
+      },
+      "links": [
+        {"title": "日本経済新聞 マーケット", "url": "https://www.nikkei.com/markets/", "desc": "為替・金利・株式市場の最新ニュース"},
+        {"title": "Yahoo!ファイナンス 日本株ランキング", "url": "https://finance.yahoo.co.jp/stocks/ranking/tradingValueHigh?market=all", "desc": "売買代金・出来高などの各種ランキング"},
+        {"title": "日本銀行 金融政策決定会合", "url": "https://www.boj.or.jp/mopo/mpmsche_minu/index.htm", "desc": "政策金利など金融政策の公式発表"},
+        {"title": "株探（かぶたん）", "url": "https://kabutan.jp/", "desc": "個別銘柄の株価・ニュース確認に"}
+      ]
     },
     "b_type_support": {
       "label": "B型支援 立ち上げ準備",
@@ -181,7 +194,13 @@
             {"date": "2026年", "headline": "厚生労働省が「省力化投資促進プラン（障害福祉）」を推進", "summary": "国としてAIなどのデジタル技術を使った業務効率化を後押しする方針を打ち出しており、開設準備の段階から、こうした支援ツールの導入を視野に入れておくと良さそう。"}
           ]
         }
-      }
+      },
+      "links": [
+        {"title": "厚生労働省 障害福祉サービス等について", "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/shougaishahukushi/service/index.html", "desc": "就労継続支援B型など障害福祉サービスの公式情報"},
+        {"title": "WAM NET（福祉医療機構）", "url": "https://www.wam.go.jp/content/wamnet/pcpub/top/", "desc": "指定申請・報酬改定など福祉事業者向けの実務情報"},
+        {"title": "発達障害情報・支援センター", "url": "https://www.rehab.go.jp/ddis/", "desc": "発達障害・特性のある子どもに関する公的な情報源"},
+        {"title": "こども家庭庁", "url": "https://www.cfa.go.jp/", "desc": "放課後等デイサービスなど子ども関連施策の公式情報"}
+      ]
     }
   },
   "stocks": {
@@ -204,17 +223,7 @@
     "etf": [
       {"code": "200A", "name": "NEXT FUNDS 日経半導体株指数連動型上場投信", "price": 5183, "change": -307, "changePct": -5.59}
     ]
-  },
-  "links": [
-    {"title": "東北大学 国際集積エレクトロニクス研究開発センター（CIES）", "url": "http://www.cies.tohoku.ac.jp/", "desc": "スピントロニクス・MRAM研究の中心拠点"},
-    {"title": "NTT R&D / IOWN公式サイト", "url": "https://group.ntt/jp/rd/", "desc": "IOWN・光電融合の最新研究発表"},
-    {"title": "EE Times Japan", "url": "https://eetimes.jp/", "desc": "半導体・エレクトロニクス業界の専門メディア"},
-    {"title": "東京エレクトロン IR情報", "url": "https://www.tel.co.jp/ir/", "desc": "決算・技術発表などの公式IR"},
-    {"title": "株探（かぶたん） 半導体関連銘柄", "url": "https://kabutan.jp/", "desc": "個別銘柄の株価・ニュース確認に"},
-    {"title": "NEDO ニュースリリース", "url": "https://www.nedo.go.jp/news/press/index.html", "desc": "国のプロジェクト成果発表（MRAM関連あり）"},
-    {"title": "The Japan Times", "url": "https://www.japantimes.co.jp/", "desc": "NYT国際版を掲載する日本の英字紙"},
-    {"title": "日本経済新聞 マーケット", "url": "https://www.nikkei.com/markets/", "desc": "為替・金利・株式市場の最新ニュース"}
-  ]
+  }
 }
 </script>
 
@@ -426,7 +435,10 @@ function renderStocks() {
 }
 
 function renderLinks() {
-  document.getElementById('links-list').innerHTML = data.links.map(l => `
+  const links = (data.categories[activeCat] && data.categories[activeCat].links) || [];
+  const heading = document.getElementById('links-heading');
+  if (heading) heading.textContent = `おすすめリンク集（${data.categories[activeCat].label}）`;
+  document.getElementById('links-list').innerHTML = links.map(l => `
     <a href="${l.url}" target="_blank" rel="noopener" class="block border border-slate-200 rounded-xl p-3 hover:bg-slate-50 transition">
       <div class="text-sm font-semibold text-indigo-600">${l.title}</div>
       <div class="text-xs text-slate-500 mt-0.5">${l.desc}</div>
@@ -441,6 +453,7 @@ catBtns.forEach(btn => {
     renderCatButtons();
     renderDayTabs();
     renderContent();
+    renderLinks();
   };
 });
 
