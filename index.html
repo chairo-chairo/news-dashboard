@@ -12,7 +12,7 @@
   <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
     <div>
       <h1 class="text-lg sm:text-xl font-bold text-slate-900">ニュースダッシュボード</h1>
-      <p class="text-xs sm:text-sm text-slate-500 mt-1">毎朝10時に自動更新（直近2日分を表示）</p>
+      <p class="text-xs sm:text-sm text-slate-500 mt-1">毎朝10時に自動更新（スピントロニクス・IOWNは直近1週間分を表示）</p>
     </div>
     <span class="hidden sm:inline-block text-xs bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-medium">日々のニュース整理</span>
   </div>
@@ -74,6 +74,10 @@
           "news": {
             "topic1_title": "「電気を99%も節約できるAIチップ」、東北大学とアイシンが開発",
             "topic1_body": "東北大学とアイシンが、普通の半導体（CMOS）と、電子の自転＝「スピン」を利用する技術「スピントロニクス」を組み合わせた新しいAIチップを発表。電源を切っても記憶が消えない大容量メモリ（MRAM）を組み込むことで、従来のチップに比べてエネルギー効率がなんと50倍になったことを実証した。工場の機械やスマート家電など、コンセントにつながずAIを動かす「エッジAI」向けの技術。",
+            "topic1_sources": [
+              {"title": "世界初、CMOS／スピントロニクス融合技術を活用したエッジAI向け実証チップの開発に成功（NEDO）", "url": "https://www.nedo.go.jp/news/press/AA5_101864.html"},
+              {"title": "東北大学プレスリリース", "url": "https://www.tohoku.ac.jp/japanese/2025/07/press20250707-01-cmos.html"}
+            ],
             "topic2_title": "東北大学と米国NIST、次世代コンピューターの部品「Pビット回路」を世界初試作",
             "topic2_body": "東北大学とアメリカの国立標準技術研究所（NIST）の共同研究チームが、「確率論的コンピューター」と呼ばれる新しいタイプのコンピューターの基本部品を、日米の技術を組み合わせて世界で初めてシリコンの上に作ることに成功した。ふつうのコンピューターが「0か1」できっちり計算するのに対し、あえて「ゆらぎ」を利用して答えを探す仕組みで、将来は100万ビット規模まで大きくできる見通しが立った。",
             "why_it_matters": "省エネ50倍のAIチップが実用化されれば、スマホやIoT機器がバッテリー切れを気にせず高度なAI処理をこなせるようになる。またゆらぎを使うコンピューターは、渋滞の予測や新薬候補探しのように「たくさんの組み合わせから一番良い答えを選ぶ」計算を、今より少ない電力で速くこなせる可能性がある。どちらも「AIをもっと身近で省エネなものにする」話で、私たちの生活にも関わってくる。",
@@ -86,6 +90,10 @@
           "news": {
             "topic1_title": "NTT「IOWN（光電融合）」の投資ファンド組成と量産化",
             "topic1_body": "6月10日、NTTは著名投資家や韓国SKグループ、台湾の中華電信などと組んで、約800億円規模の投資ファンド「アイオンAIファンド」を作ると発表。電気の代わりに光でデータをやり取りする「光電融合」技術を広めるのが狙いで、光電融合スイッチは2026年度中に商品化予定。通信容量は世界トップレベルの毎秒102.4テラビットを目指す。",
+            "topic1_sources": [
+              {"title": "NTTのファンド組成が刺激、本格普及へ疾走する「IOWN」関連株（株探ニュース）", "url": "https://kabutan.jp/news/marketnews/?b=n202606241096"},
+              {"title": "NTT、「IOWN 2.0」を発表。Broadcomらと協業し光電融合スイッチを2026年に製品化（INTERNET Watch）", "url": "https://internet.watch.impress.co.jp/docs/news/2053692.html"}
+            ],
             "topic2_title": "東京エレクトロン×東北大学、次世代メモリ「MRAM」の車載向け実証",
             "topic2_body": "電源を切っても記憶が消えない次世代メモリ「MRAM」を作る製造装置を、東京エレクトロンが東北大学と共同開発。車の中のような高温環境（175℃）でも壊れずに使える20nmサイズのMRAM試作に成功した。",
             "why_it_matters": "「光電融合」は、AIが計算する巨大なデータセンターの電力消費を大幅に減らせる技術。AIの電気代・発熱問題を和らげ、サービスをより安く速く使えるようにする。「MRAM」は電源を入れ直しても一瞬で作業を再開できるメモリで、スマホやパソコンの起動が速くなったり、車載機器が暑さに強くなったりする。",
@@ -288,12 +296,23 @@ function renderDayTabs() {
     btn.onclick = () => { activeIndex = i; renderDayTabs(); renderContent(); };
     dayTabs.appendChild(btn);
   });
-  if (days.length < 2) {
+  if (days.length < 7) {
     const placeholder = document.createElement('span');
     placeholder.className = 'px-4 py-2 rounded-full text-sm text-slate-400 border border-dashed border-slate-200';
-    placeholder.textContent = '前日分は明日以降に表示されます';
+    placeholder.textContent = `過去分は自動更新のたびに増えていきます（現在${days.length}日分）`;
     dayTabs.appendChild(placeholder);
   }
+}
+
+function renderSourceLinks(sources) {
+  if (!sources || sources.length === 0) return '';
+  return `
+    <div class="flex flex-wrap gap-2 mt-2">
+      ${sources.map(s => `
+        <a href="${s.url}" target="_blank" rel="noopener" class="text-xs text-indigo-500 hover:text-indigo-700 hover:underline bg-indigo-50 rounded-full px-2 py-1">🔗 ${s.title}</a>
+      `).join('')}
+    </div>
+  `;
 }
 
 function renderTechNews(day) {
@@ -304,7 +323,8 @@ function renderTechNews(day) {
         <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 1. 本日の大注目トピック</span>
         <h3 class="font-bold text-slate-900">${n.topic1_title}</h3>
         <p class="text-sm text-slate-600 mt-1 leading-relaxed">${n.topic1_body}</p>
-        ${n.topic2_title ? `<h3 class="font-bold text-slate-900 mt-3">${n.topic2_title}</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">${n.topic2_body}</p>` : ''}
+        ${renderSourceLinks(n.topic1_sources)}
+        ${n.topic2_title ? `<h3 class="font-bold text-slate-900 mt-3">${n.topic2_title}</h3><p class="text-sm text-slate-600 mt-1 leading-relaxed">${n.topic2_body}</p>${renderSourceLinks(n.topic2_sources)}` : ''}
       </div>
       <div>
         <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 2. なぜ凄いのか・生活への影響</span>
