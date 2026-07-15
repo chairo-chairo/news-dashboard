@@ -224,25 +224,25 @@
     }
   },
   "stocks": {
-    "updated_at": "2026-07-10〜2026-07-15（銘柄ごとに取得日時が異なる参考値、ウェブ検索取得）",
+    "updated_at": "各銘柄カードに取得日を表示（ウェブ検索取得の参考値）",
     "main": [
-      {"code": "8035", "name": "東京エレクトロン", "price": 71130, "change": -170, "changePct": -0.24},
-      {"code": "7751", "name": "キヤノン", "price": 4368, "change": 56, "changePct": 1.30},
-      {"code": "6857", "name": "アドバンテスト", "price": 29775, "change": 955, "changePct": 3.31},
-      {"code": "6723", "name": "ルネサスエレクトロニクス", "price": 4381, "change": -88, "changePct": -1.97},
-      {"code": "6762", "name": "TDK", "price": 3213, "change": -21, "changePct": -0.65},
-      {"code": "4063", "name": "信越化学工業", "price": 7418, "change": 78, "changePct": 1.06},
-      {"code": "9432", "name": "NTT", "price": 150.2, "change": 1.1, "changePct": 0.74},
-      {"code": "7259", "name": "アイシン", "price": 2290.5, "change": 1.0, "changePct": 0.04}
+      {"code": "8035", "name": "東京エレクトロン", "price": 71130, "change": -170, "changePct": -0.24, "date": "7/14"},
+      {"code": "7751", "name": "キヤノン", "price": 4368, "change": 56, "changePct": 1.30, "date": "7/14"},
+      {"code": "6857", "name": "アドバンテスト", "price": 29775, "change": 955, "changePct": 3.31, "date": "7/14"},
+      {"code": "6723", "name": "ルネサスエレクトロニクス", "price": 4381, "change": -88, "changePct": -1.97, "date": "7/14"},
+      {"code": "6762", "name": "TDK", "price": 3213, "change": -21, "changePct": -0.65, "date": "7/15"},
+      {"code": "4063", "name": "信越化学工業", "price": 7418, "change": 78, "changePct": 1.06, "date": "7/14"},
+      {"code": "9432", "name": "NTT", "price": 150.2, "change": 1.1, "changePct": 0.74, "date": "7/14"},
+      {"code": "7259", "name": "アイシン", "price": 2290.5, "change": 1.0, "changePct": 0.04, "date": "7/10"}
     ],
     "niche": [
-      {"code": "4055", "name": "ティアンドエスグループ", "price": 1674, "change": -66, "changePct": -3.79},
-      {"code": "4369", "name": "トリケミカル研究所", "price": 3325, "change": 125, "changePct": 3.91},
-      {"code": "6382", "name": "トリニティ工業", "price": 1281, "change": -19, "changePct": -1.46},
-      {"code": "6859", "name": "エスペック", "price": 3965, "change": 45, "changePct": 1.15}
+      {"code": "4055", "name": "ティアンドエスグループ", "price": 1678, "change": 1, "changePct": 0.06, "date": "7/14"},
+      {"code": "4369", "name": "トリケミカル研究所", "price": 3325, "change": 125, "changePct": 3.91, "date": "7/10"},
+      {"code": "6382", "name": "トリニティ工業", "price": 1232, "change": 5, "changePct": 0.41, "date": "7/14"},
+      {"code": "6859", "name": "エスペック", "price": 3855, "change": -45, "changePct": -1.15, "date": "7/14"}
     ],
     "etf": [
-      {"code": "200A", "name": "NEXT FUNDS 日経半導体株指数連動型上場投信", "price": 5335, "change": 210, "changePct": 4.10}
+      {"code": "200A", "name": "NEXT FUNDS 日経半導体株指数連動型上場投信", "price": 5335, "change": 210, "changePct": 4.10, "date": "7/15"}
     ]
   }
 }
@@ -436,7 +436,7 @@ function stockCard(s) {
   return `
     <div class="border border-slate-200 rounded-xl p-3 flex flex-col gap-1">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-slate-400">${s.code}</span>
+        <span class="text-xs text-slate-400">${s.code}${s.date ? `<span class="text-[10px] text-slate-300"> (${s.date}時点)</span>` : ''}</span>
         <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${color}">${arrow} ${Math.abs(s.changePct).toFixed(2)}%</span>
       </div>
       <div class="text-sm font-semibold text-slate-800 truncate">${s.name}</div>
