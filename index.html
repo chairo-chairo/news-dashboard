@@ -783,6 +783,53 @@
               "summary": "株式会社SHIFTが、生成AIを活用したインクルーシブな働き方の設計で障害のある従業員の業務参加を広げた取り組みが評価された。就労支援の現場でのAI活用のヒントになる事例。"
             }
           ]
+        },
+        "launch_subsidies": {
+          "title": "立ち上げに使えそうな補助金・助成金",
+          "items": [
+            {
+              "date": "随時",
+              "headline": "障害福祉サービス等施設整備費補助金（都道府県・市町村）",
+              "summary": "訓練室の改修や作業用の設備、送迎車両の購入などにかかる費用の一部を、都道府県や市町村が補助する制度。窓口は自治体ごとに異なるため、開設予定地の自治体に直接確認するのがおすすめ。"
+            },
+            {
+              "date": "随時",
+              "headline": "人材開発支援助成金（厚生労働省）",
+              "summary": "職員に職業訓練を受けさせた場合、その訓練費用や訓練期間中の賃金の一部を国が助成してくれる制度。開設初期のスタッフ教育に活用しやすい。"
+            },
+            {
+              "date": "2026年度",
+              "headline": "デジタル化・AI導入補助金2026（旧IT導入補助金、中小企業庁）",
+              "summary": "会計・請求・記録管理などのITツール導入費用を補助する制度。2026年度からAI機能付きツールの活用がより重視されており、通常枠ではクラウド利用料の1/2程度が補助される。"
+            },
+            {
+              "date": "随時",
+              "headline": "処遇改善加算（運営が始まってから使える）",
+              "summary": "開設後、職員の給料を上げるための加算。開設時そのものの費用には使えないが、運営が軌道に乗ったあとの人材確保・定着に役立つ。"
+            }
+          ],
+          "note": "補助金・助成金の多くは経費を支払った「後」に支給される後払い制のため、開業時の初期費用そのものには充当しづらく、つなぎ資金の準備が必要になることが多い点に注意。"
+        },
+        "dx_ai_subsidies_opportunity": {
+          "title": "障害福祉のDX・AI活用に使える補助金（自分のITスキルを活かすヒントに）",
+          "items": [
+            {
+              "date": "2026年度",
+              "headline": "デジタル化・AI導入補助金2026（複数者連携デジタル化・AI導入枠など）",
+              "summary": "他の障害福祉事業所がAIやITツールを導入する際にも使える補助金。IT・総務の知識を活かして、周りの事業所の申請サポートやツール選定の相談役になれる可能性がある。"
+            },
+            {
+              "date": "都道府県ごと",
+              "headline": "障害福祉サービス事業所等デジタル技術導入支援事業",
+              "summary": "見守り機器、記録支援システム、コミュニケーション機器などの導入費用を、都道府県・政令指定都市・中核市が補助（補助率3/4の例あり）。事業所ごとに何を導入すべきか整理してあげる役割にニーズがありそう。"
+            },
+            {
+              "date": "都道府県ごと",
+              "headline": "障害福祉分野の介護テクノロジー・ICT導入モデル事業",
+              "summary": "自治体が障害福祉分野向けにICT導入のモデル事業や希望調査を実施している例がある（大阪府・広島県など）。地域ごとの募集情報をチェックしておくと、支援先探しのヒントになる。"
+            }
+          ],
+          "note": "総務・経理とITの知識を組み合わせれば、「補助金の申請書類作成支援」や「ITツール導入の伴走支援」といった形で、自事業所の外からも仕事につなげられる可能性がある分野。"
         }
       },
       "links": [
@@ -805,6 +852,11 @@
           "title": "こども家庭庁",
           "url": "https://www.cfa.go.jp/",
           "desc": "放課後等デイサービスなど子ども関連施策の公式情報"
+        },
+        {
+          "title": "デジタル化・AI導入補助金2026",
+          "url": "https://it-shien.smrj.go.jp/",
+          "desc": "ITツール・AI導入費用の補助金公式ポータル"
         }
       ]
     }
@@ -1096,7 +1148,7 @@ function renderEconomy() {
 function renderBTypeSupport() {
   const b = data.categories.b_type_support;
   const sec = b.sections;
-  const order = ['system_changes', 'children_news', 'afterschool_school_news', 'ai_recommendations'];
+  const order = ['system_changes', 'children_news', 'afterschool_school_news', 'ai_recommendations', 'launch_subsidies', 'dx_ai_subsidies_opportunity'];
   contentSection.innerHTML = `
     <div class="mb-4 flex items-center justify-between">
       <span class="inline-block text-xs font-semibold text-indigo-600">■ B型支援 立ち上げ準備メモ</span>
@@ -1114,6 +1166,7 @@ function renderBTypeSupport() {
                 <p class="text-sm text-slate-600 mt-1 leading-relaxed">${item.summary}</p>
               </div>
             `).join('')}
+            ${sec[key].note ? `<p class="text-xs text-slate-400 leading-relaxed mt-1">${sec[key].note}</p>` : ''}
           </div>
         </div>
       `).join('')}
