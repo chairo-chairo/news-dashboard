@@ -821,7 +821,7 @@
           "note": "補助金・助成金の多くは経費を支払った「後」に支給される後払い制のため、開業時の初期費用そのものには充当しづらく、つなぎ資金の準備が必要になることが多い点に注意。香川県内で開設する場合、高松市内かどうかで窓口・補助対象が変わる点にも注意（高松市内は原則県補助の対象外）。"
         },
         "dx_ai_subsidies_opportunity": {
-          "title": "障害福祉のDX・AI活用に使える補助金（自分のITスキルを活かすヒントに）",
+          "title": "障害福祉のDX・AI活用に使える補助金",
           "items": [
             {
               "date": "2026年度",
@@ -1178,7 +1178,7 @@ function renderEconomy() {
 function renderBTypeSupport() {
   const b = data.categories.b_type_support;
   const sec = b.sections;
-  const order = ['system_changes', 'children_news', 'afterschool_school_news', 'ai_recommendations', 'launch_subsidies', 'dx_ai_subsidies_opportunity'];
+  const order = ['launch_subsidies', 'dx_ai_subsidies_opportunity', 'system_changes', 'children_news', 'afterschool_school_news', 'ai_recommendations'];
   contentSection.innerHTML = `
     <div class="mb-4 flex items-center justify-between">
       <span class="inline-block text-xs font-semibold text-indigo-600">■ B型支援 立ち上げ準備メモ</span>
