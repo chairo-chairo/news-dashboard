@@ -794,9 +794,12 @@
       "password_hint": "資産に関する合言葉",
       "updated_at": "2026-07-17 15:00時点（ウェブ検索取得の参考値）",
       "evaluation": {
+        "portfolio_type": "バランス型ポートフォリオ（配当インカム×半導体グロース×金ヘッジの三本柱）",
         "overview": "銘柄数は20を超えていますが、大きく4つのグループに分けられます。①日本の高配当・生活関連株（NF日経高配当50、DIC、本田技研、SUBARU、三菱商事、SBI新生銀行、日本航空、NTT、ソフトバンク、スクウェア・エニックス）②半導体・AI関連（NF日経半導体株、SOXL、エヌビディア）③米国の主力企業・市場全体（アップル、アルファベット、VOO、VYM、GXS&P500配当貴族）④金（純金上場信託）です。値上がりを狙う銘柄と、配当や資産の目減りを防ぐ銘柄がバランスよく混ざった構成になっています。",
         "economic_context": "ちょうど日銀が利上げを進めて円を強くしようとしている局面にあり、このポートフォリオはその流れと相性が良い部分と、影響を受けやすい部分の両方を持っています。NTTや国内の高配当株は内需に支えられやすく比較的安定していますが、INPEXのような資源関連株は原油価格や為替の動きで振れやすい銘柄です。また半導体セクター（NF日経半導体株、SOXL、エヌビディア）は世界的なAI投資ブームの恩恵を受けてきた一方、直近ではNF日経半導体株が1日で7.79％下落するなど値動きが荒くなっており、米中対立やブロック経済化の影響を受けやすいテーマでもあります。純金上場信託は、こうした不確実性の高い局面での「安全資産」としての役割を果たしていると考えられます。",
         "risks": "特に注意したいのはSOXL（半導体関連株の値動きを3倍に増幅するレバレッジ型ETF）です。日々の値動きが大きくなりやすい商品のため、短期的に大きく上下しやすく、長期間持ち続けると値動きの往復によって基準価額が目減りしやすい特徴があります。保有数自体は2株と少ないですが、値動きの荒さは他の銘柄より格段に大きい点は意識しておきたいところです。また、NF日経半導体株・SOXL・エヌビディアの3つは、いずれも半導体・AIという同じテーマに連動しやすいため、「分散しているつもりが、実は同じ方向に動きやすい」という集中リスクにも注意が必要です。",
+        "strengths": "日本の高配当株（NF日経高配当50など）と米国の高配当ETF（VYM、GX S&P500配当貴族）を組み合わせることで、安定した配当収入を確保しつつ、半導体・AIという成長テーマにもしっかり参加できている点が強みです。純金上場信託を組み込むことで、株式市場が大きく揺れる場面でのクッション役も用意されています。さらに円建て資産と米ドル建て資産の両方を持っているため、為替が円安に動いても円高に動いても、どちらかの資産が支えになりやすいバランスの取れた構成です。",
+        "next_growth": "現状は半導体関連（NF日経半導体株・SOXL・エヌビディア）への実質的な集中度合いがやや高く、この分野が下落する場面ではまとめて影響を受けやすい構成になっています。次のステップとしては、値動きの傾向が異なる業種（生活必需品・ヘルスケア・通信インフラなど）を組み合わせて分散をさらに広げることや、NISA（少額投資非課税制度）の非課税枠を活用して同じ銘柄群を税制優遇の対象に移すことなどが、収益機会を保ちながら値動きの荒さを和らげる方向性として考えられます。",
         "summary": "全体としては、値上がりを狙う成長株と、配当・実物資産で守りを固める銘柄がバランスよく組み合わさったポートフォリオです。ただし半導体関連への実質的な集中度合いと、SOXLの値動きの荒さは知っておくと安心材料になります。これは投資助言ではなく、現状のポートフォリオの内容と経済状況との関係を整理してお伝えするものです。"
       },
       "disclaimer": "株価はウェブ検索で取得した参考値です。リアルタイム株価ではないため、正確な値は証券会社のアプリ等でご確認ください。評価額は「株価×保有数」の概算で、手数料・税金・配当は考慮していません。このコーナーは投資助言ではなく、保有内容の整理と経済状況との関係の解説を目的としています。",
@@ -1179,6 +1182,11 @@ function renderPortfolioUnlocked() {
       <span class="inline-block text-xs font-semibold text-indigo-600">■ ポートフォリオ評価</span>
       <span class="text-xs text-slate-400">${p.updated_at}</span>
     </div>
+    ${ev.portfolio_type ? `
+    <div class="mb-5">
+      <span class="inline-block text-xs font-semibold text-white bg-indigo-600 px-3 py-1 rounded-full">${ev.portfolio_type}</span>
+    </div>
+    ` : ''}
     <div class="space-y-5 mb-8">
       <div>
         <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 全体感</span>
@@ -1192,6 +1200,18 @@ function renderPortfolioUnlocked() {
         <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ 注目したいリスク</span>
         <p class="text-sm text-slate-600 leading-relaxed">${ev.risks}</p>
       </div>
+      ${ev.strengths ? `
+      <div>
+        <span class="inline-block text-xs font-semibold text-emerald-600 mb-1">■ 現在の強み</span>
+        <p class="text-sm text-slate-600 leading-relaxed">${ev.strengths}</p>
+      </div>
+      ` : ''}
+      ${ev.next_growth ? `
+      <div>
+        <span class="inline-block text-xs font-semibold text-amber-600 mb-1">■ 次に伸ばすこと</span>
+        <p class="text-sm text-slate-600 leading-relaxed">${ev.next_growth}</p>
+      </div>
+      ` : ''}
       <div class="bg-indigo-50 rounded-xl p-4">
         <span class="inline-block text-xs font-semibold text-indigo-600 mb-1">■ まとめ</span>
         <p class="text-sm text-slate-700 leading-relaxed font-medium">${ev.summary}</p>
